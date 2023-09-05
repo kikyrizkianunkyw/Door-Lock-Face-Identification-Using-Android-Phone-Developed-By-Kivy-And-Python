@@ -1,0 +1,106 @@
+#:kivy 2.1.0
+
+
+WindowManager:
+    MainWindow:
+    SecondWindow:
+
+<MyMDLabel@MDLabel>
+    size_hint_y: None
+    height: self.texture_size[1]
+
+<MainWindow>
+    name: "first" 
+    # NavigationLayout:
+    # Changed the above to:
+    MDNavigationLayout:
+        ScreenManager:
+            id: main_window
+            Screen:
+                name: "HomeScreen"
+                BoxLayout:
+                    orientation: 'vertical'
+                    # MDToolbar:
+                    # Changed the above to:
+                    MDTopAppBar:
+                        title: "Door Lock App Face Id"
+                        md_bg_color: app.theme_cls.primary_color
+                        elevation: 2
+                       
+                    Widget:
+
+                Image:
+                    source: "newlogo.png"
+                    size_hint: 0.7, 0.72
+                    halign: "center"
+                    pos_hint: { "center_x": 0.5, "center_y": 0.57 } 
+
+                Label:
+                    text: "COMPUTER HARDWARE & NETWORKING \n""AND SOFTWARE ENGINEERNING LABORATORY"
+                    halign: "center"
+                    text_size: root.width, None
+                    size: self.texture_size
+                    pos_hint: { "center_x": 0.5,"center_y": 0.35 }
+                    color: (0, 0, 0,1)
+                Label:
+                    text: "Selamat Datang di Aplikasi Door Lock Face ID"
+                    halign: "center"
+                    text_size: root.width, None
+                    size: self.texture_size
+                    pos_hint: { "center_x": 0.5,"center_y": 0.27 }
+                    color: (0, 0, 0,1)
+                
+                MDFloatingActionButton:
+                    icon: 'camera'
+                    pos_hint: { "center_x": 0.5,"center_y": 0.17 }
+                    elevation: 2
+
+                    on_release:
+                        app.start_camera()
+                        root.manager.transition.direction = "left"
+                        app.root.current = "second"
+#                        app.click_camera()
+
+
+<SecondWindow>:
+    name: "second"     
+    MDNavigationLayout:
+        ScreenManager:
+            id: second_window     
+            Screen:
+                name: "camera_window"
+                BoxLayout:
+                    orientation: 'vertical'
+                    id: container
+
+                    MDTopAppBar:
+                        title: "Door Lock App Face Id"
+                        md_bg_color: app.theme_cls.primary_color
+                        elevation: 2
+                        left_action_items: [[ "arrow-left", lambda self: app.back_to_home_screen() ]]
+
+#                    Image:
+#                        # This is where the video will show. The id allows easy
+#                        # access:
+#                        id: vid
+#
+#                        # size: root.width, root.height
+#                        # pos: 10, 10
+#                        # size_x: root.width
+#
+#                        size_hint: 1, 0.7
+#                        # Allow the video image to be scaled:
+#                        allow_stretch: True
+#                        # Keep the aspect ratio so people don't look squashed:
+#                        keep_ratio: True
+#                        size_hint: 200, 200
+#                        pos_hint: { 'center_x' : 0.5, }
+
+                    AndroidCamera:
+                        id: vid
+                        size_hint: 1, 0.7
+                        allow_stretch: True
+                        keep_ratio: True
+                        play: False
+                
+
